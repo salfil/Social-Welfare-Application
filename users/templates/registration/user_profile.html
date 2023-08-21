@@ -1,0 +1,54 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+
+<h1 class=" alert alert-primary card mb-3 " class="alert alert-primary" role="alert">Staff Profile</h1>
+
+<br/>
+
+<div class="alert alert-primary" role="alert"> 
+    <div class="card-body">
+      <h5 class="card-title">
+        <!--placeholder of user fields to be extracted from django-->
+        {{page_user.user.first_name}}
+        {{page_user.user.last_name}}
+
+        <!-- checks if the user has a profile picture -->
+        {% if page_user.profile_pic  %}
+           <!--placeholder of user fields to be extracted from django-->
+          <img src="{{ page_user.profile_pic.url }}" width="100" height="100"></img>
+
+        {% else %}
+            <!-- if no profile picture it outputs generic profile picture -->
+          <img src="{% static 'fyp/images/image.jpg' %}" width="100" height="100"></img>
+
+
+        {% endif %}
+
+        <!-- placeholder to store speciality field from django -->
+        <p>Speciality: {{page_user.speciality}}</p>
+        </h5>
+        <!-- checks if staff member has a linkedin url before outputting -->
+        <p class="card-text text-muted">
+            {% if page_user.linkedin_url %}
+                <a href="{{ page_user.linkedin_url }}">Linkedin</a>
+            {% endif %}
+        </p>
+       
+    
+      <!-- placeholder to store and output the bio and location of the staff member -->
+      <p class="card-text">
+        About me: {{ page_user.bio }}
+        </p>
+        <p class="card-text">
+          Appointment Location: {{ page_user.location }}
+          </p>
+
+    </div>
+  </div>
+
+<a href="{% url 'book_appointment' %}" class="btn btn-secondary">Book Appointment with {{page_user.user.first_name}}</a>
+
+</ul>
+
+{% endblock %}

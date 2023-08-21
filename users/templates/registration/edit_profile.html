@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="alert alert-primary" role="alert">
+
+<h1>Edit Settings</h1>
+
+<br/><br/>
+<!--placeholder for speciality field. -->
+{{ user.staff.speciality }}
+
+<br/><br/>
+
+<!--form to update the settings of the profile. -->
+<div class="form-group">
+    <form method="POST">
+        <!--renders form fields as a paragraph-->
+        {% csrf_token %}
+        {{form.as_p}}
+        <button>Update profile</button>
+
+    </form>
+</div>
+
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+
+
+{% load static %}
+
+{% block content %}
+
+<!--template to output the programmes of a particular type-->
+
+{% if programme_types %}
+<include src="./programmes.html"></include>
+<div class="alert alert-primary" role="alert">
+    <!--placeholder to output the type -->
+    <h1> {{ types }} Programmes</h1>
+
+    <div>
+        <ul>
+            <!--loops through programmes based on the type and outputs them-->
+        {% for programme in programme_types %}
+        <!--url to point to page where they get more information about a programme. -->
+            <p class="alert alert-primary" role="alert"><a href="{% url 'programme_detail' programme.pk %}"> {{programme.title }}</a>
+                
+                By - {{programme.author}} 
+                
+                <!--check if staff member has a profile page then outputs-->
+            {% if programme.author.staff.profile_pic  %}
+                <img src="{{ programme.author.staff.profile_pic.url }}" width="100" height="100"></img>
+            
+            {% else %}
+                
+                <img src="{% static 'fyp/images/image.jpg' %}" width="100" height="100"></img>
+                <br/><br/>
+            
+            {% endif %}
+            </p>
+            
+            
+
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<!--if no programmes for a particular category-->
+{% else %}
+
+    <p class="alert alert-primary">
+         Make sure to keep updated as programmes will be added soon</p>
+
+
+{% endif %}
+
+
+<br/><br/>
+<a href="{% url 'programmesPage' %}" class="btn btn-secondary">All Programmes</a>
+<br/><br/>
+
+
+{% endblock %}

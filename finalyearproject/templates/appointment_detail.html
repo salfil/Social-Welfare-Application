@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<br/>
+<!--Template to output details about an appointment-->
+
+<div class="alert alert-primary" role="alert">
+  <!--placeholders to output fields of the appointmentbooking model. -->
+    <h1>{{ appointmentbooking.first_name}} {{appointmentbooking.last_name}}</h1>
+    <small> {{appointmentbooking.app_date}}
+            {{appointmentbooking.app_time}}</small>
+            <br/>
+    <p>
+      {{appointmentbooking.description}}
+    </p>
+    <p>
+      Email: {{appointmentbooking.email}}
+      <br/>
+      Phone Number : {{appointmentbooking.phone}}
+    </p>
+    <p>
+      <!--checks if appointment is in person or online before outputting location infor-->
+      {% if appointmentbooking.in_person  %}
+          <p><b>In Person Appointment</b></p>
+      {% else %}
+          <p><b>Online Appointment</b></p>
+      {% endif %}
+    </p>
+    <p>Key : {{appointmentbooking.key}}</p>
+    <p>link : {{appointmentbooking.link}}</p>
+    <!--if statements checking appointment being accepted, declined, rearranged before ouputting the information-->
+    {% if not appointmentbooking.accepted and not appointmentbooking.declined and not appointmentbooking.rearranged  %}
+      <p>This appointment is still awaiting acceptance</p>  
+    {% endif %}
+    {% if appointmentbooking.accepted %}
+      <p>You have accepted this appointment</p>
+    {% endif %}
+    {% if appointmentbooking.declined and not appointmentbooking.rearranged %}
+      <p>You have declined this appointment</p>
+    {% endif %}
+    {% if appointmentbooking.rearranged %}
+      <p>You have rearranged this appointment</p>
+    {% endif %}
+    {% if appointmentbooking.user_accepted %}
+      <p>The user has accepted the re arranged appointment</p>
+    {% endif %}
+    {% if appointmentbooking.completed %}
+      This appointment has been completed
+    {% endif %}
+    
+    <!--urls for staff member to either accept, decline, rearrange appointment-->
+    {% if not appointmentbooking.completed %}
+        <a href="{% url 'accept_appointment' appointmentbooking.pk %}" class="btn btn-success margin-right">Accept Appointment</a>
+        <br/>
+      <a href="{% url 'decline_appointment' appointmentbooking.pk %}" class="btn btn-danger">Decline Appointment</a>
+        <br/>
+        <a href="{% url 'rearrange_appointment' appointmentbooking.pk %}" class="btn btn-secondary">Rearrange Appointment</a>
+        <br/>
+        <a href="{% url 'complete_appointment' appointmentbooking.pk %}" class="btn btn-success">Mark as complete</a>
+    {% endif %}
+
+</div>
+
+<hr>
+
+<!--checks if appointment is online before taking staff to zoom website to create a link-->
+{% if not appointmentbooking.in_person  %}
+  <a href = "https://us04web.zoom.us/meeting/schedule" 
+                      class="btn btn-success">Schedule Zoom meeting</a>
+  <br/>
+{% endif %}
+<a href="{% url 'view_appointments' %}" class="btn btn-secondary">All Appointments</a>
+
+
+{% endblock %}

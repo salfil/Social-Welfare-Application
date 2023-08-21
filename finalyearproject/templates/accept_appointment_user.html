@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!--Template for users to accept an appointment from the staff member-->
+
+<div class="alert alert-primary" role="alert">
+    <h1>Accept Appointment</h1>
+
+    <div class="form-group">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}        
+            {{form.as_p}}
+            <button>accept appointment</button>
+
+        </form>
+    </div>
+</div>
+
+    <script>
+
+        var name = "{{ user.id }}";
+        document.getElementById("e").value=name;
+
+    </script>
+
+
+{% endblock %}

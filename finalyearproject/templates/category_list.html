@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+<!--template to output list of categories of posts-->
+
+{% block content %}
+
+
+    <h1 class="alert alert-primary" role="alert">Categories</h1>
+
+    <!--loops through the category lists and using placeholder outputs each one-->
+    {% for item in cat_menu_list %}
+
+       <h4 class="alert alert-primary" role="alert"> <a class="dropdown-item"  
+        href="{% url 'category' item %}">
+        {{item}}</a></h4>
+                            
+    {% endfor %}
+    
+        <!--images correposponding to each of the categories-->
+           
+        <img src="{% static 'fyp/images/category1.jfif' %}" width="200" height="150"></img>
+        <img src="{% static 'fyp/images/category2.jfif' %}" width="200" height="150"></img>
+        <img src="{% static 'fyp/images/category3.jfif' %}" width="200" height="150"></img>
+        <img src="{% static 'fyp/images/category4.jfif' %}" width="200" height="150"></img>
+           
+    
+    <!--style to change the colour of the output when hovering it with a mouse-->
+    <style>
+        h4 {color: #f00;}
+        h4:hover {color: rgb(255, 0, 0);}
+    </style> 
+    
+    
+
+
+{% endblock %}

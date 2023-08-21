@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--THIS IS A REMOVED FUNCTIONALITY. NO LONGER INCLUDED IN THE PROGRAMME.  -->
+<h1>Register Client</h1>
+
+<div class="form-group">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="form-control-label" for="input-username">Username</label>
+            {{ registration_form.username }}
+           
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="input-email">Email</label>
+            {{ registration_form.email }}
+            
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="input-firstname">First Name</label>
+            {{ registration_form.first_name }}
+           
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="input-lastname">Last Name</label>
+            {{ registration_form.last_name }}
+           
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="input-image">Password</label>
+            {{ registration_form.password1 }}
+           
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="input-image">Re-confirm Password</label>
+            {{ registration_form.password2 }}
+            
+        </div>
+
+        <a href="{% url 'login_client.html' %}">
+            <button type="button" class="btn btn-primary">register</button>
+        </a>
+
+    </form>
+</div>
+
+
+
+{% endblock %}

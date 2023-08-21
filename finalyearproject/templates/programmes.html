@@ -1,0 +1,76 @@
+{% include 'base.html'%}
+
+{% load static %}
+
+<!--template for general programmes page-->
+
+{% block content %}
+<div class="container-fluid float-left ">
+  <div class="row flex-nowrap ">
+      <div class="alert alert-primary col-auto col-md-3 col-xl-2 px-sm-2 px-0 ">
+          <div class=" d-flex flex-column">
+              <p href="#" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                  <span class="fs-5 d-none d-sm-inline">Programmes Page</span>
+              </p>
+              <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                  <li class="nav-item">
+                      
+                        <a href="{% url 'all_programmes' %}" class=" btn btn-outline-success nav-link align-middle px-0 text-dark text-decoration-none">
+                          <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">All Programmes</span>
+                      </a>
+                      
+                  </li>
+                  <!--outputs the types of programmes on the sidebar-->
+                  <ul class=" nav-link px-0 align-middle text-dark text-decoration-none">
+                    {% for item in programmes %}
+                    <a class="btn btn-outline-success nav-link text-dark text-decoration-none" href="{% url 'programme_type' item %}">
+                        {{item}}</a>
+                                    
+                    {% endfor %}
+                    </li>
+                  </ul>
+              </ul>
+              <hr>
+              <!--section where users can search for a program using the search bar-->
+              <form class="form-inline" method="POST" action="{% url 'search_programmes' %}">
+                {% csrf_token %}
+                <input class="form-control" type="search" 
+                placeholder="Search Programmes" aria-label="Search" name="searched">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+          </div>
+      </div>
+      <!--images and textual  description of page outputted-->
+      <div class="col py-3">
+        <img src="{% static 'fyp/images/homeImage1.png' %}" width="350" height="250"></img>
+        <img src="{% static 'fyp/images/homeImage2.jfif' %}" width="350" height="250"></img>
+        <img src="{% static 'fyp/images/homeImage3.jfif' %}" width="350" height="250"></img>
+        <br/><br/>
+        <div>
+        <ul class="alert alert-primary">
+          <p>
+            <b>
+            In This section 
+            </b>
+          </p>
+          
+              <p>You should expect to find Programmes of different types</p>
+          
+          
+              <p>You  can navigate to the set type that you are looking for using the nav bar and search system</p>
+          
+          
+            <p>Ask questions regarding the programmes so  that the relevant staff member can respond accordingly</p>
+          
+        </ul>
+      </div>
+  </div>
+
+</div>
+
+<style>
+  p:hover {color: rgb(255, 0, 0);}
+</style>
+
+
+{% endblock %}

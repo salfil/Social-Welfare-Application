@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="alert alert-primary" role="alert" >
+{% if user.is_authenticated %}
+    <!--validation to make sure the users are editing profile page that corresponds to their own account-->
+    {% if user.id == staff.user.id %}
+        <h1>Edit Profile page</h1>
+
+        <div class="alert alert-primary" role="alert" class="form-group">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!--renders form fields as a paragraph-->
+                {{form.as_p}}
+                <button>Update Profile Page</button>
+
+            </form>
+        </div>
+        
+    <!--validation to make sure the users can only edit their own profile page-->
+    {% else %}
+
+        You are not the correct user 
+            to edit this page
+
+
+    {% endif %}
+
+{% else %}
+    <!--validation to make sure the users can only edit their profile page once logged in-->
+
+    Log in first then edit profile page
+
+
+{% endif %}
+</div>
+{% endblock %}

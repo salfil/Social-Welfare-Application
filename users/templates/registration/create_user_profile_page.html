@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!--Checks user has been authenticated before outputting template form to create a profile page. -->
+{% if user.is_authenticated %}
+<div class="form-group alert alert-primary" role="alert">
+    <h1>Create Profile page</h1>
+
+    <div class="form-group alert alert-primary" role="alert">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            {{form.as_p}}
+            <button>Create Profile Page</button>
+
+        </form>
+    </div>
+</div>
+
+    
+
+{% else %}
+
+Log in first then create profile page 
+
+{% endif %}
+
+
+{% endblock %}

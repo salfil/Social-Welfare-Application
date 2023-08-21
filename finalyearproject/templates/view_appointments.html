@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+
+
+{% load static %}
+
+{% block content %}
+
+<!--template for user to view their appointments-->
+{% if user.is_authenticated %}
+<div class="alert alert-primary" role="alert">
+    <h1>Your Appointments</h1>
+
+    <ul>
+        <!--loop through all the appointments for which they are the staff member for-->
+        <!--We then output certain information for the appointment-->
+        {% for appointment in appointments %}
+            {% if appointment.staff == user.first_name and not appointment.completed %}
+            
+                <p class="alert alert-primary" role="alert">With:<b> {{appointment.first_name}} {{appointment.last_name}}</b>
+                    <br/>
+                    Date: {{appointment.app_date}}
+                    <br/>
+                    <!--url to point to page where we are given more detail on the appointment. -->
+                    Details: <a href="{% url 'appointment_detail' appointment.pk %}"><b>Here</b></a>
+                    <br/>
+                    <!--check if appointment has been cancelled-->
+                    {% if appointment.cancelled %}
+                        This appointment has been cancelled
+                    {% endif %}
+                    
+                    <!--url to allow deletion of appointment-->
+                    <a href = "{% url 'delete_appointment' appointment.id %}" 
+                    class="btn btn-danger">Delete Appointment</a>
+                        
+            </p>
+
+                </p>
+            {% endif %}
+        {% endfor %}
+        </ul>
+
+
+
+    <br/><br/>
+    <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+    <br/><br/>
+</div>
+
+{% endif %}
+
+
+{% endblock %}

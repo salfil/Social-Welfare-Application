@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--template that allows the staff member to delete a post once authenticated-->
+
+{% if user.is_authenticated %}
+    <h1>Delete Post</h1>
+    <h3>Delete: {{post.title}}</h3>
+
+    <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}        
+            <button>Delete post</button>
+
+        </form>
+    </div>
+
+    <script>
+
+        var name = "{{ user.id }}";
+        document.getElementById("e").value=name;
+
+    </script>
+
+{% else %}
+
+Log in first then delete posts
+
+{% endif %}
+
+
+{% endblock %}

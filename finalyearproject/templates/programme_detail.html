@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!--template that outputs the detail pertaining to the programmes-->
+
+{% block content %}
+<br/>
+
+<!--details about programme include title, dates, name of author etc. -->
+<div class="alert alert-primary card-body" role="alert">
+    <h1>{{ programme.title }}</h1>
+    <small> By: {{programme.author.first_name}} -
+            {{programme.post_date}}</small>
+
+            
+            <br/>
+
+    <a href="#">Edit</a>
+    <small><a href="#">Delete</a></small>
+</div>
+
+<hr>
+<br/>
+<!--programme description, link etc outputted here-->
+<div class="alert alert-primary card-body" role="alert">
+    {% if programme.image %}
+    <img src="{{ programme.image.url}}" width="100" height="100"><br/><br/>
+    {% endif %}
+
+    Description: {{programme.description|safe }}
+    <br/><br/>
+
+    <a href="{{programme.link}}">Link for more information</a>
+
+    <br/>
+</div>
+<br/>
+
+<!--output ainformation about the author of the programme which is a staff member-->
+<div class=" alert alert-primary card mb-3">
+    <div class="card-body">
+      <h5 class="card-title"> About the author of this programme</h5>
+        {% if programme.author.staff.profile_pic  %}
+            <img src="{{ programme.author.staff.profile_pic.url }}" width="100" height="100"></img>
+            <br/><br/>
+
+        {% else %}
+
+        <!--name, image and speciality of staff member outputted. -->
+            <img src="{% static 'fyp/images/image.jpg' %}" width="100" height="100"></img>
+            <br/><br/>
+
+        {% endif %}
+        {{programme.author.first_name}}
+        {{programme.author.last_name}}
+        <br/>
+        Speciality: {{programme.author.staff.speciality}}
+        
+        </h5>
+        <!--url link to the staff members linkedin-->
+        <p class="card-text text-muted">
+            {% if post.author.staff.linkedin_url %}
+                <a href="{{ programme.author.staff.linkedin_url }}">Linkedin</a>
+            {% endif %}
+        </p>
+       
+    <a href="{% url 'show_profile_page' programme.author.staff.id %}">Profile Page for more info </a>
+
+    </div>
+  </div>
+
+<br/>
+
+<!--url to point back to the general programmes page-->
+<a href="{% url 'programmesPage' %}" class="btn btn-secondary">All Programmes</a>
+<br/><br/>
+<hr>
+
+
+{% endblock %}

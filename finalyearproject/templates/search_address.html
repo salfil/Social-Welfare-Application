@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+<!--template which outputs address for searched staff member if what they have searched is valid-->
+
+{% block content %}
+{% if searched %}
+<div class="alert alert-primary" role="alert">
+    <!--outputs address as well as profile picture of stuff-->
+    <h2> Address for {{ searched }}  </h2>
+    {% for staff in staffs %}
+        <p class="alert alert-primary" role="alert">
+        <img src="{{staff.staff.profile_pic.url }}" width="100" height="100"></img>
+        Address of {{staff.first_name}} {{staff.last_name}}: 
+        {{staff.staff.location}}
+        
+        
+    </p>
+    {% endfor %}
+    <hr>
+    <br/>
+    <a href="{% url 'route' %}" class="btn btn-secondary">Back to routing</a>
+    <br/><br/>
+</div>
+
+{% else %}
+    <h3>use the search</h3>
+    <br/>
+    <br/><br/>
+    <a href="{% url 'route' %}" class="btn btn-secondary">Back</a>
+
+{% endif %}
+
+
+{% endblock %}

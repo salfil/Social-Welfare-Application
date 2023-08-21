@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!--template to output the detail of a post-->
+
+{% block content %}
+
+<!--outputs post, date, body etc.-->
+<div class="alert alert-primary card-body  " role="alert">
+    <h1>{{ post.title }}</h1>
+    <small> By: {{post.author.first_name}} -
+            {{post.post_date}}</small>
+
+            
+            <br/>
+
+    <a href="{% url 'update_post' post.pk %}">Edit</a>
+    <small><a href="{% url 'delete_post' post.pk %}">Delete</a></small>
+
+    <hr>
+
+    {% if post.header_image %}
+    <img src="{{ post.header_image.url}}" width="100" height="100"><br/><br/>
+    {% endif %}
+
+    {{post.body|safe }}
+
+    <br/>
+</div>
+
+<br/>
+
+<div class="alert alert-primary" role="alert">
+    <!--HTML to output staff member info who posted it
+        includes name, profile picture, etc. -->
+    <div class="card-body ">
+      <h5 class="card-title " >
+        About Writer of the post</h5>
+        {{post.author.first_name}}
+        {{post.author.last_name}}
+        <br/>
+        Speciality: {{post.author.staff.speciality}}
+        
+        </h5>
+        <p class="card-text text-muted">
+            {% if post.author.staff.linkedin_url %}
+                <a href="{{ post.author.staff.linkedin_url }}">Linkedin</a>
+            {% endif %}
+        </p>
+        {% if post.author.staff.profile_pic  %}
+            <img src="{{ post.author.staff.profile_pic.url }}" width="100" height="100"></img>
+            <br/>
+        {% else %}
+
+            <img src="{% static 'fyp/images/image.jpg' %}" width="100" height="100"></img>
+            <br/>
+
+        {% endif %}
+       
+    <a href="{% url 'show_profile_page' post.author.staff.id %}">Profile Page </a>
+    <br/><br/>
+      <p class="card-text">
+        {{ post.author.staff.bio }}
+        </p>
+    </div>
+  </div>
+  <br/>
+
+  <!--checks if there are no comments -->
+<div class="alert alert-primary" role="alert">
+    <h2>Comments</h2>
+    <br/>
+    {% if not post.comments.all %}
+        No comments yet
+        <br/>
+        <!--url to redirect user to page that helps them to add a comment-->
+        <a href="{% url 'add_comment' post.pk %}">Add First comment</a>
+    {% else %}
+    <a href="{% url 'add_comment' post.pk %}">Add Comment</a>
+    <br/><br/>
+    <!--loops through all comments of the post and outputs each one-->
+        {% for comment in post.comments.all %}
+            <strong>
+            {{comment.name}} - 
+            {{comment.date_added}}
+            </strong>
+
+            <br/>
+            {{comment.body}}
+            <br/>
+            
+
+        {% endfor %}
+
+
+    {% endif %}
+</div>
+<br/>
+
+<!--button to return to all posts-->
+<a href="{% url 'category_list' %}" class="btn btn-secondary">All Posts</a>
+<br/><br/>
+<hr>
+<form action="{% url 'like_post' post.pk %}" method="POST">
+    {% csrf_token %}
+        <button type="submit", name="post_id", 
+        value="{{ post.id }}", class="btn btn-primary btn-sm">
+        like</button>
+
+</form>
+
+{% endblock %}

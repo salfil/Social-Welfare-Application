@@ -1,0 +1,57 @@
+{% extends 'base.html'%}
+
+{% load static %}
+
+{% block content %}
+
+<!--template to output posts for a particular category-->
+
+<!--if statement to check if there are any categories in the posts-->
+{% if category_posts %}
+    <h1 class="alert alert-primary"> {{ cats }} Posts</h1>
+
+    <div>
+        <ul>
+        <!--loop through posts that belong to that category-->
+        {% for post in category_posts %}
+        <!--outputs information of the post using the correct fields and placeholders-->
+        <!--url that points to page where they can get all the details of the post-->
+            <p class="alert alert-primary" role="alert"><a href="{% url 'post_detail' post.pk %}"> {{post.title }}</a>
+                
+                - {{post.author}} 
+                - {{post.post_date}}
+                
+            <!--output profile picture of the author of the post which is a staff member-->
+            {% if post.author.staff.profile_pic  %}
+                <img src="{{ post.author.staff.profile_pic.url }}" width="100" height="100"></img>
+            
+            {% else %}
+            
+                <img src="{% static 'fyp/images/image.jpg' %}" width="100" height="100"></img>
+                <br/><br/>
+            
+            {% endif %}
+            </p>
+            
+            
+
+        {% endfor %}
+        </ul>
+    </div>
+
+<!--checks if there are no posts then outputs the following message-->
+{% else %}
+
+    <p class="alert alert-primary"> 
+        No posts for this at the moment. Make sure to keep updated for future posts</p>
+
+
+{% endif %}
+
+<!--url to redirect to page which shows the categories of posts-->
+<br/><br/>
+<a href="{% url 'category_list' %}" class="btn btn-secondary">All Posts</a>
+<br/><br/>
+
+
+{% endblock %}

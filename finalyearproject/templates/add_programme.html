@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!--template to allow staff members to add programmes once authenticated-->
+{% if user.is_authenticated %}
+<div class="alert alert-primary" role="alert">
+    <h1>Add Programme</h1>
+
+    <div class="form-group">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.media}}
+            {{form.as_p}}
+            <button>Post Programme</button>
+
+        </form>
+    </div>
+
+    <!--javascript to make sure that the programme correponds to the user who posted it. -->
+    <script>
+
+        var name = "{{ user.id }}";
+        document.getElementById("e").value=name;
+
+    </script>
+</div>
+
+{% else %}
+
+Log in first then add Programmes
+
+{% endif %}
+
+
+{% endblock %}

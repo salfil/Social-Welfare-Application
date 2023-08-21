@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!--template which outputs programmes for the user 
+    based on what they have searched for it will be checked for matches-->
+
+
+{% if searched %}
+<div class="alert alert-primary" role="alert">
+    <h2> {{ searched }} programmes </h2>
+    <!--loops through programmes that matches search criteria then outputs detail for each one. -->
+    {% for programme in programmes %}
+        <p class="alert alert-primary" role="alert"><a href="{% url 'programme_detail' programme.pk %}"> {{programme.title }}</a>
+                    
+            By - {{programme.author}} 
+            
+            
+        {% if programme.author.staff.profile_pic  %}
+            <img src="{{ programme.author.staff.profile_pic.url }}" width="100" height="100"></img>
+        
+        {% else %}
+        
+            <img src="{% static 'fyp/images/image.jpg' %}" width="100" height="100"></img>
+            <br/><br/>
+        
+        {% endif %}
+    </p>
+    {% endfor %}
+
+    <br/><br/>
+    <a href="{% url 'programmesPage' %}" class="btn btn-secondary">All Programmes</a>
+    <br/><br/>
+</div>
+
+
+{% else %}
+    <h3>use the search</h3>
+    <br/>
+    <br/><br/>
+    <a href="{% url 'programmesPage' %}" class="btn btn-secondary">Back</a>
+
+{% endif %}
+
+
+{% endblock %}

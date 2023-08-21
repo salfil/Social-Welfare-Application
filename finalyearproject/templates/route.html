@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block extend_head %}
+
+
+
+{% endblock %}
+
+<!--template where user inputs start and end address in routing-->
+
+{% block content %}
+<!--user can search for a staff member and it will output their address so they can use it in the routing system-->
+<div class="alert alert-primary" role="alert">
+  <h1>Appointment Locations for in person</h1>
+        <p> Use the search bar to search for the address of your desired  staff member to get relevant directions 
+             Simply copy and paste the address into the router and you are good to go!
+        </p>
+        <form class="form-inline" method="POST" action="{% url 'search_address' %}">
+          {% csrf_token %}
+          <input class="form-control" type="search" 
+          placeholder="Search staff members" aria-label="Search" name="searched">
+          <br/>
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+
+
+</div>
+
+
+<!--navbar of the route and the actual directions-->
+<div class="alert alert-primary" role="alert">
+  <h3>Directions for appointment</h3>
+
+  <ul class="nav">
+      <li><a class="btn btn-outline-secondary nav-link text-blue text-decoration-none" href="{% url 'route' %}">Routing</a></li>
+      <li><a class="btn btn-outline-secondary nav-link text-blue text-decoration-none" href="javascript:void(0)" onclick="alert('Please add a start and end address')">Directions</a></li>
+  </ul>
+
+  
+  <!--form for address inputting-->
+    <label for="id-google-address-a">Start Address</label>
+    <input type="text" placeholder="*Begin typing address" id="id-google-address-a" name="google_address_a">
+
+    <label for="id-google-address-b">Destination Address</label>
+    <input type="text" placeholder="*Begin typing address" id="id-google-address-b" name="google_address_b">
+
+    <!--latitude and longitude values-->
+    <input type="hidden" class="geo" id="id-lat-a" value="">
+    <input type="hidden" class="geo" id="id-long-a" value="">
+    <input type="hidden" class="geo" id="id-lat-b" value="">
+    <input type="hidden" class="geo" id="id-long-b" value="">
+
+
+  
+</div>
+
+<!--defines api key for use in calculating directions-->
+<script type="text/javascript">
+
+    var google_api_key = "{{google_api_key|safe}}";
+
+  </script>
+
+  <script src="{% static 'google_places.js' %}"></script>
+
+<br/><br/>
+{% endblock %}
+
+
+
+
+
+

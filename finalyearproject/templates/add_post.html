@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--template that allows user to add posts if they have been authenticated.-->
+{% if user.is_authenticated %}
+<div class="alert alert-primary" role="alert">
+    <h1>Add Post</h1>
+
+    <div class="form-group">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!--renders extra resources or media needed to complete the form rendering-->
+            {{form.media}}
+            {{form.as_p}}
+            <button>Post</button>
+
+        </form>
+    </div>
+
+    <!--javascript to make sure that the programme correponds to the user who posted it. -->
+    <script>
+
+        var name = "{{ user.id }}";
+        document.getElementById("e").value=name;
+
+    </script>
+</div>
+
+<!--makes sure that the staff member is logged in before adding posts-->
+{% else %}
+
+Log in first then add posts
+
+{% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--template that outputs form to decline an appointment-->
+
+{% if user.is_authenticated %}
+<div class="alert alert-primary" role="alert">
+    <h1>Decline Appointment</h1>
+    <!--form below-->
+    <div class="form-group">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}        
+            {{form.as_p}}
+            <button>Decline appointment</button>
+
+        </form>
+    </div>
+</div>
+
+<script>
+
+        var name = "{{ user.id }}";
+        document.getElementById("e").value=name;
+
+</script>
+
+{% else %}
+
+Log in first then add posts
+
+{% endif %}
+
+
+{% endblock %}

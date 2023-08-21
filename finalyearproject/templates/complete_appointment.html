@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--template for staff member to mark an appointment as complete-->
+{% if user.is_authenticated %}
+<div class="alert alert-primary" role="alert">
+    <h1>Complete Appointment</h1>
+
+    <div class="form-group">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}        
+            {{form.as_p}}
+            <button>Complete appointment</button>
+
+        </form>
+    </div>
+</div>
+
+    <script>
+
+        var name = "{{ user.id }}";
+        document.getElementById("e").value=name;
+
+    </script>
+
+{% else %}
+
+Log in first then add posts
+
+{% endif %}
+
+
+{% endblock %}

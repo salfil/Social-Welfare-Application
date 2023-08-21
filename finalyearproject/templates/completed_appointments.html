@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!--template to output all appoints that have been completed-->
+
+{% if user.is_authenticated %}
+<div class="alert alert-primary" role="alert">
+    <h1>Your Completed Appointments</h1>
+
+    <ul>
+            <!--if statement to check that the appointment if with the correct staff member logged in before outputting-->
+            {% if appointments.staff == user.first_name %}
+                <!--information about that appointment outputted using fields and placeholders is outputted-->
+                <p class="alert alert-primary" role="alert">With:<b> {{appointments.first_name}} {{appointments.last_name}}</b>
+                    <br/>
+                    Date: {{appointments.app_date}}
+                    <br/>
+                    Details: <a href="{% url 'appointment_detail' appointments.pk %}"><b>Here</b></a>
+                    <br/>
+                    <a href = "{% url 'delete_appointment' appointments.id %}" 
+                    class="btn btn-danger">Delete Appointment</a>
+                    
+                
+                
+            </p>
+
+                </p>
+            {% endif %}
+       
+        </ul>
+
+
+
+    <br/><br/>
+    <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+    <br/><br/>
+</div>
+
+{% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+
+
+{% load static %}
+
+{% block content %}
+<!--template to output all staff members-->
+<div class="alert alert-primary" role="alert">
+<include src="./programmes.html"></include>
+    <h1 class="alert alert-primary" role="alert"> All staff members</h1>
+    <div>
+            <ul>
+            <!--loops through all of the staff member objects and outputs the fields using the placeholders-->
+            {% for staff in staffs %}
+            <b>
+                <p class="alert alert-primary" role="alert">
+                    {{staff.user.first_name }}
+                    {{staff.user.last_name}} </b>
+                    {% if staff.profile_pic  %}
+                    <img src="{{staff.profile_pic.url }}" width="100" height="100"></img>
+                    <br/>
+                
+                    {% else %}
+                    
+                        <img src="{% static 'fyp/images/image.jpg' %}" width="100" height="100"></img>
+                        <br/>
+                    
+                    {% endif %}
+
+                    <br/>
+                    Speciality: {{staff.speciality}}
+                    <br/>
+                    Location: {{staff.location}}
+                    <br/>
+                    
+                    <!--- {{post.post_date}}-->
+                    
+                
+                <a href="{% url 'show_profile_page' staff.id %}">
+                    View Profile Page</a>
+                </p>
+
+                
+
+            {% endfor %}
+            </ul>
+            <!--url to the routing sytem -->
+            <a href="{% url 'route' %}" class="btn btn-secondary">Check which staff members are closest to you</a>
+    </div>
+</div>
+
+<!--url to the appointment booking form-->
+<a href="{% url 'book_appointment' %}" class="btn btn-secondary">Back</a>
+<br/>
+
+
+{% endblock %}

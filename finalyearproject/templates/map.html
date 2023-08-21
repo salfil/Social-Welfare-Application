@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block extend_head %}
+
+
+<!--template which outputs the routing and directions travel information-->
+
+{% endblock %}
+
+
+
+
+{% block content %}
+<div class="alert alert-primary" role="alert">
+  <h3 id="map">Here are the directions to your appointment</h3>
+  <!--navbar to navigate between the routing and directions section-->
+  <ul class="nav">
+      <li><a class="btn btn-outline-secondary nav-link text-blue text-decoration-none" href="{% url 'route' %}">Routing</a></li>
+      <li><a class="btn btn-outline-secondary nav-link text-blue text-decoration-none" class="active" href="#map">Map</a></li>
+  </ul>
+
+  <div>
+    <!--
+      Portion of code Bobby Spearman
+      Scope: table outputting the different directions information and javascript for calculations
+      https://github.com/bobby-didcoding/did_django_google_api_tutorial/blob/main/templates/main/map.html
+      Date Published:  July 20th 2021
+      -->
+    <table>
+      <thead>
+        <tr>
+          <!--table which outputs the fields and the travel info-->
+          <th>Field</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Start</td>
+          <td>{{directions.origin}}</td>      
+        </tr>
+        <tr>
+          <td>Destination</td>
+          <td>{{directions.destination}}</td>      
+        </tr>
+        <tr>
+          <td>Duration</td>
+          <td>{{directions.duration}}</td>      
+        </tr>
+        <tr>
+          <td>Distance</td>
+          <td>{{directions.distance}}</td>      
+        </tr>
+        <tr>
+          <td>Directions</td>
+          <td id="dir-toggle">click <a href="javascript:void(0)" onclick="DirectionsToggle()">here</a></td>      
+        </tr>
+
+      </tbody>
+    </table>
+
+    <table id="dir-table" hidden class="alert alert-primary" role="alert" >
+      <thead>
+        <tr>
+          <th>Directions</th>
+          <th>Distance</th>
+          <th>Duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for dist, dur, text in directions.steps %}
+        <tr>
+          <td>{{text|safe}}</td>
+          <td>{{dist}}</td>
+          <td>{{dur}}</td>   
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    
+  </div>
+
+  <div class="map-container">
+
+    <div id="map-route"></div>
+
+
+  </div>
+
+  <script type="text/javascript">
+    //javascript to calculate the toggle directions based on the values
+
+      var google_api_key = "{{google_api_key|safe}}";
+      var lat_a = {{lat_a|safe}};
+      var long_a = {{long_a|safe}};
+      var lat_b = {{lat_a|safe}};
+      var long_b = {{long_b|safe}};
+      var origin = "{{origin|safe}}";
+      var destination = "{{destination|safe}}";
+      var directions = {{directions|safe}}
+
+      function DirectionsToggle(){
+        var el = $('#dir-toggle');
+        var dir_table = $('#dir-table')
+        if (dir_table.attr("hidden") == "hidden") {
+          dir_table.fadeIn()
+          dir_table.removeAttr("hidden")
+          el.html('hide <a href="javascript:void(0)" onclick="DirectionsToggle()">here')
+        } else {
+          dir_table.fadeOut()
+          dir_table.attr("hidden", "hidden")
+          el.html('click <a href="javascript:void(0)" onclick="DirectionsToggle()">here')
+        }
+  }
+  
+
+    </script>
+
+    <script src="{% static 'google_maps.js' %}"></script>
+</div>
+
+{% endblock %}
+

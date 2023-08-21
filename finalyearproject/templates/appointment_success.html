@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!--success page of appointment booking. -->
+{% block content %}
+<br/>
+
+<div class="alert alert-primary" role="alert">
+  <h1>Appointment Booked</h1>
+  <p>search for your appointment using the key to check if it has been accepted or not.</p>
+  <p>You should receive a response for your appointment within one working day</p>
+  
+</div>
+<hr>
+
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+
+{% endblock %}

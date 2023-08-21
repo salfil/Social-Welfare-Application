@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!--template for user to cancel appointment-->
+<div class="alert alert-primary" role="alert">
+    <h1>Cancel Appointment</h1>
+
+    <div class="form-group">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}        
+            {{form.as_p}}
+            <button>Cancel appointment</button>
+
+        </form>
+    </div>
+</div>
+
+    <script>
+
+        var name = "{{ user.id }}";
+        document.getElementById("e").value=name;
+
+    </script>
+
+
+
+
+{% endblock %}

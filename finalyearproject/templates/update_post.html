@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--template for user to update their posts 
+    which includes validating to see if they are the users who wrote that post
+            before letting them update it -->
+
+{% if user.is_authenticated %}
+<div class="alert alert-primary" role="alert">
+    <h1>Edit Post</h1>
+
+    <div class="form-group">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}        
+            {{form.as_p}}
+            <button>update Post</button>
+
+        </form>
+    </div>
+
+    <script>
+
+        var name = "{{ user.id }}";
+        document.getElementById("e").value=name;
+
+    </script>
+</div>
+
+{% else %}
+
+Log in first then update posts
+
+{% endif %}
+
+
+{% endblock %}

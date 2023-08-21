@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% load static %}
+<!--template which outputs appointment information for the user based on the key they have inputted-->
+
+
+{% block content %}
+
+{% if searched %}
+<div class="alert alert-primary" role="alert" >
+    <h2> Appointment {{ searched }}  </h2>
+    <!--loop through appointments-->
+    {% for appointment in appointments %}
+        <p>
+            <!--output appointment info based on status of the appointment using if statements-->
+        {% if not appointment.accepted and not appointment.declined and not appointment.rearranged %}
+            Your appointment is still waiting to be accepted.
+        {% endif %}
+        {% if appointment.declined %}
+            Your appointment has unforunately been declined
+            <br/>
+            Message from {{appointment.staff}}: {{appointment.message}}
+            <br/>
+        {% endif %}
+        {% if appointment.rearranged %}
+            Your appointment has been requested to be rearranged to:
+            <br/>
+            {{appointment.app_date}} {{appointment.app_time}}
+            <br/>
+            if this does not suit you please delete this appointment and rebook for another date
+            <a href = "{% url 'delete_appointment_user' appointment.id %}" 
+                    class="btn btn-danger">I can't make this Appointment</a>
+            <a href = "{% url 'accept_appointment_user' appointment.id %}" 
+                    class="btn btn-success">I can make this Appointment</a>
+            <br/><br/>
+        {% endif %}
+        {% if appointment.completed %}
+            This appointment has been completed
+        {% endif %}
+        {% if appointment.cancelled %}
+            This appointment has been cancelled
+        {% endif %}
+        {% if appointment.accepted and not appointment.cancelled %}
+            <p class="btn alert-primary">Your appointment has been accepted</p>
+            <br/>
+            {% if appointment.user_accepted %}
+                You have accepted this appointment 
+                <br/>
+            {% endif %}
+            With: {{appointment.staff}}
+            <br/>
+            {% if not appointment.rearranged %}
+                At: {{appointment.app_date}} {{appointment.app_time}}
+                <br/>
+            {% endif %}
+            {% if appointment.in_person and not appointment.cancelled %}
+                This appointment will be in person
+                <br/>
+                Location: {{appointment.location}}
+                <br/><br/>
+                <!--url to page where they get directions if their appointment is accepted-->
+                <a href="{% url 'route' %}" class="btn btn-secondary">Get Directions</a> 
+            {% else %}
+                <p>appointment link: {{appointment.link}}</p>
+            {% endif %}
+            <a href="{% url 'cancel_appointment' appointment.id %}" class="btn btn-danger">Cancel</a>
+        {% endif %}
+    </p>
+    {% endfor %}
+    <hr>
+    <br/>
+    <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+    <br/><br/>
+</div>
+
+{% else %}
+    <h3>use the search</h3>
+    <br/>
+    <br/><br/>
+    <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+
+{% endif %}
+
+
+{% endblock %}

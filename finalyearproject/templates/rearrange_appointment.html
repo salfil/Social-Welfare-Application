@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--template that outputs page where appointments can be rearranged. -->
+
+<!--checks if staff member is authenticated before re arranging. -->
+{% if user.is_authenticated %}
+<div class="alert alert-primary" role="alert">
+    <h1>Accept Appointment</h1>
+
+    <div class="form-group">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}        
+            {{form.as_p}}
+            <button>accept appointment</button>
+
+        </form>
+    </div>
+</div>
+
+    <script>
+
+        var name = "{{ user.id }}";
+        document.getElementById("e").value=name;
+
+    </script>
+
+{% else %}
+
+Log in first then add posts
+
+{% endif %}
+
+
+{% endblock %}

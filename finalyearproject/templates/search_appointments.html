@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!--template which outputs all appointments  for the user based on the phone number they have inputted-->
+
+<!--if appointment matches the search criteria they  are looped through and outputted one by one. -->
+{% if searched %}
+<div class="alert alert-primary" role="alert" >
+    <h2> Appointments with phone number {{ searched }}  </h2>
+    {% for appointment in appointments %}
+    <!--name, date and description of appointment outputted. -->
+        <p class="alert alert-primary" role="alert"><b> {{appointment.first_name}} {{appointment.last_name}}</b>
+            <br/>
+            Date: {{appointment.app_date}}
+            <br/>
+            Description: {{appointment.description}}
+            <br/>
+        </p>
+        <hr>
+        <br/>
+    
+    {% endfor %}
+</div>
+<a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+{% endif %}
+{% endblock %}

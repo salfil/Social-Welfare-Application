@@ -1,0 +1,48 @@
+{% extends 'base.html'%}
+
+{% load static %}
+<!--template which outputs the home page-->
+{% block content %}
+<div></div>
+<body class="bg-info text-dark float right margin-right: 100px;">
+    <div class="container-fluid margin-right">
+        <!--title as well as images and information about the website is below-->
+        <div class="alert alert-primary card-body text-dark margin-right" role="alert">
+            <h1>Social Welfare Helper</h1>
+        </div>
+        <div class="container-fluid margin-right: 100px;">
+            <img src="{% static 'fyp/images/homeImage1.png' %}" width="350" height="250"></img>
+            <img src="{% static 'fyp/images/homeImage2.jfif' %}" width="350" height="250"></img>
+            <img src="{% static 'fyp/images/homeImage3.jfif' %}" width="350" height="250"></img>
+
+        </div>
+        </div>
+        <br/>
+        <div class="alert alert-primary card-body text-dark" role="alert" >
+        <p>
+            This is the web app where you expect to:
+        </p>
+        <ul>
+            <li>
+                <p>Access valuable information from staff members with various specialities</p>
+            </li>
+            <li>
+                <p>Be able to book appointments with  various staff members depending on what you need help with</p>
+            </li>
+            <li>
+                <p>Find programmes that are suited to the type of help you  are looking for</p>
+            </li>
+        </ul>
+        <p>
+            Key instruction: to check the status of your appointment search using your KEY given at the time of booking. 
+        </p>
+        <p>
+            Key instruction: to view all your appointments simply search using the phone number you booked your appointment with 
+        </p>
+    </div>
+    </div>
+
+</body>
+
+
+{% endblock %}

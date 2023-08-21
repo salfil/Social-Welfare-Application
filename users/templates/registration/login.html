@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--login page for staff member-->
+<div class="alert alert-primary" role="alert">
+    <h1>Login</h1>
+    <br/>
+    <div class="form-group">
+        <!--POST HTTP method for form submission-->
+        <form method="POST">
+            <!--csrf token for protection against CSRF aTTACKS-->
+            {% csrf_token %}
+            <!--user name and password fields-->
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Enter username" name="username">
+            </div>
+            <br/>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Password" name="password">
+            </div>
+            <br/>
+            <!--{{form.as_p}}-->
+            <button>Login</button>
+            <br/><br/>
+            <!--url link to register if they wish to do so-->
+            <a class="alert alert-primary" role="alert" href="{% url 'register'%}">Not registered? Sign up Here</a> 
+            
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock %}

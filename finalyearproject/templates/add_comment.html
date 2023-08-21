@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--template to output page for user to add comments-->
+
+    <h1>Add Comment</h1>
+
+    <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+            
+            {{form.as_p}}
+            <button>Add Comment</button>
+
+        </form>
+    </div>
+
+   
+
+
+
+{% endblock %}
